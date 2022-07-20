@@ -44,10 +44,12 @@ const propiedadesJSON = [
 ];
 
 const checkEmptyStr = (str) => {
+  console.log("Viendo el check", str);
   return !str;
 };
 
 const loadHouses = (elements) => {
+  document.querySelector("#total").innerHTML = elements.length;
   for (let i = 0; i < elements.length; i++) {
     document.querySelector(".propiedades").innerHTML += `
     <div class="propiedad">
@@ -81,18 +83,36 @@ const applyFilters = () => {
     !isNaN(squareMaxMetresSelected) === false
   ) {
     alert("Ponga solo números por favor");
+    return;
   }
   if (
     checkEmptyStr(bedRoomsSelected) ||
     checkEmptyStr(squareMinMetresSelected) ||
     checkEmptyStr(squareMaxMetresSelected)
   ) {
-    alert("No deje campos vacíos por favor");
+    alert("No deje el espacio vacío");
+    return;
   }
+  let newArray = propiedadesJSON.filter((e) => {
+    return (
+      bedRoomsSelected <= e.rooms &&
+      squareMinMetresSelected <= e.metros &&
+      squareMaxMetresSelected >= e.metros
+    );
+  });
+  document.querySelector(".propiedades").innerHTML = "";
+  loadHouses(newArray);
+};
+
+const resetFilters = () => {
+  document.querySelector(".propiedades").innerHTML = "";
+  document.querySelector("#bedRooms").value = "";
+  document.querySelector("#squareMinMetres").value = "";
+  document.querySelector("#squareMaxMetres").value = "";
+  loadHouses(propiedadesJSON);
 };
 
 window.addEventListener("DOMContentLoaded", () => {
-  document.querySelector("#total").innerHTML = propiedadesJSON.length;
   document.querySelector(".propiedades").innerHTML = "";
   loadHouses(propiedadesJSON);
 });
