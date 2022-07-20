@@ -43,11 +43,6 @@ const propiedadesJSON = [
   },
 ];
 
-const checkEmptyStr = (str) => {
-  console.log("Viendo el check", str);
-  return !str;
-};
-
 const loadHouses = (elements) => {
   document.querySelector("#total").innerHTML = elements.length;
   for (let i = 0; i < elements.length; i++) {
@@ -85,12 +80,8 @@ const applyFilters = () => {
     alert("Ponga solo números por favor");
     return;
   }
-  if (
-    checkEmptyStr(bedRoomsSelected) ||
-    checkEmptyStr(squareMinMetresSelected) ||
-    checkEmptyStr(squareMaxMetresSelected)
-  ) {
-    alert("No deje el espacio vacío");
+  if (bedRoomsSelected === 0 || squareMinMetresSelected === 0 || squareMaxMetresSelected === 0) {
+    alert("No deje espacios vacíos");
     return;
   }
   let newArray = propiedadesJSON.filter((e) => {
